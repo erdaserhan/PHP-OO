@@ -8,6 +8,9 @@ $perso1 = "Pas encore de personnage";
 if(isset($_POST['especePerso'])){
     try{
         $perso1 = new PersOOOn(species2: $_POST['especePerso'], name: $_POST['nomPerso']);
+        $isKevin = strtolower($perso1->getNomPerso()) === 'kevin';
+        $perso1->setXpPerso($isKevin ? 999999999 : 1);
+        $perso1->setHpPerso($isKevin ? 999999999 : 100);
     }catch(Exception $e){
         $error = [
             'code' => $e->getCode(),

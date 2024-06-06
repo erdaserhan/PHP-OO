@@ -7,24 +7,24 @@ abstract class PersoAbstract{
     protected int $experience=0;
     protected string $espece;
 
-    // constantes publique
-    public const ESPECE_CHOICE = [
+    // constantes publiques
+    public const  ESPECE_CHOICE = [
         "Humain",
         "Saiyan",
         "Elf",
         "Nain",
         "Cyborg",
     ];
-    protected const THROW_DICE_SMALL = 6; 
-    protected const THROW_DICE_BIG = 20;
+    protected const  THROW_DICE_SMALL = 6;
+    protected const  THROW_DICE_BIG = 20;
 
     // Méthodes
 
 
-    // un méthode abstraite ne peut être privée
+    // une méthode abstraite ne peut être privée
     // abstract private function lulu();
 
-    // méthodes abstraites, elle sont déclarées dans la classe abtraite, pour obliger 
+    // méthodes abstraites, elles sont déclarées dans la classe abstraite, pour obliger
     // les héritiers à redéclarer ces méthodes en public ou protected
     // On les applique ici à des getters et setters, c'est plutôt rare
     abstract public function setHealthPoint(int $health);
@@ -39,6 +39,10 @@ abstract class PersoAbstract{
 
 
     // méthode __construct qui sera héritée
+
+    /**
+     * @throws Exception
+     */
     public function __construct(string $theName, string $theEspece)
     {
         // utilisation du setter pour le nom
@@ -49,31 +53,36 @@ abstract class PersoAbstract{
     /*
     Méthodes pour les lancer de dés
     */
-    public function throwSmallDice(int $number=1, bool $addition = true): int
+    /**
+     * @throws \Random\RandomException
+     */
+    public function throwSmallDice(int $number=1, bool $addition = true): array
     {
-        $int = 0;
-        for($i=0; $i<$number; $i++){
-            //
+        $dice = array();
+        for($i=1; $i<=$number; $i++){
+            /*
             if($addition){
-                $int += random_int(1,self::THROW_DICE_SMALL);
+                $dice[$i] = random_int(1,self::THROW_DICE_SMALL);
             }else{
                 $int -= random_int(1,self::THROW_DICE_SMALL);
-            }
+            }*/
+            // ternaire positif/négatif
+            $dice[$i] = $addition ? random_int(1,self::THROW_DICE_SMALL) : - random_int(1,self::THROW_DICE_SMALL);
         }
-        return $int;
+        return $dice;
     }
-    public function throwBigDice(int $number=1, bool $addition = true): int
+
+    /**
+     * @throws \Random\RandomException
+     */
+    public function throwBigDice(int $number=1, bool $addition = true): array
     {
-        $int = 0;
-        for($i=0; $i<$number; $i++){
-            //
-            if($addition){
-                $int += random_int(1,self::THROW_DICE_BIG);
-            }else{
-                $int -= random_int(1,self::THROW_DICE_BIG);
-            }
+        $dice = array();
+        for($i=1; $i<=$number; $i++){
+            // ternaire positif/négatif
+            $dice[$i] = $addition ? random_int(1,self::THROW_DICE_BIG) : - random_int(1,self::THROW_DICE_BIG);
         }
-        return $int;
+        return $dice;
     }
 
     /*
@@ -87,7 +96,11 @@ abstract class PersoAbstract{
     }
 
     // méthode set qui sera héritée (en fluent setters: retourne l'instance plutôt que du vide)
-    public function setName(string $tName): self
+
+    /**
+     * @throws Exception
+     */
+    public function setName(string $tName): self|Exception
     {
         // protection
         $ProtectedName = trim(strip_tags($tName));
@@ -96,7 +109,7 @@ abstract class PersoAbstract{
         // si le nom est plus grand que 2 caractères et plus petit ou égal à 20 caractères
         if($nbName > 2 && $nbName <= 20){
             
-            // on remplit le propriété avec la variable VERIFIEE
+            // on remplit la propriété avec la variable VERIFIEE
             $this->name = $ProtectedName;
             // on renvoie l'instance (fluent setting)
             return $this;
@@ -113,9 +126,15 @@ abstract class PersoAbstract{
     }
 
     // Setter de $espece
-    public function setEspece(string $espece){
+
+    /**
+     * @throws Exception
+     */
+    public function setEspece(string $espece): self|Exception
+    {
         if(in_array($espece, self::ESPECE_CHOICE)){
             $this->espece = $espece;
+            return $this;
         }else{
             throw new Exception("Tu fais quoi là!",334);
         }

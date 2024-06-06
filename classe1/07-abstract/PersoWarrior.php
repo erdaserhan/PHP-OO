@@ -11,43 +11,100 @@ class PersoWarrior extends PersoAbstract{
 
     public function __construct(string $theName, string $theEspece)
     {
-        // vient de la classe parent (PersoAbstract)
+        // vient de la classe parente (PersoAbstract)
         parent::__construct($theName,$theEspece);
 
-        // surcharge
+        // texte
+        $text = "<h3>Création d'un ".self::class." de l'espèce {$this->getEspece()} nommé {$this->getName()}</h3>";
+
+        // surcharge de la force
         $strength = $this->getStrength();
-        $this->setStrength($strength += self::throwSmallDice(3));
+        $text .= "<p>Force de base : $strength + 3 dés de 6 faces : +";
+        // lancé de 3 dés de 6.
+        foreach (self::throwSmallDice(3) as $key => $value){
+            $text = " dé $key : $value +";
+            $strength += $value;
+        }
+        $text = substr($text,0,-1);
+        $text .= " = $strength<br>";
+        $this->setStrength($strength);
+
+        // surcharge de la résistance
         $resistance = $this->getResistance();
-        $this->setResistance($resistance += self::throwSmallDice(3));
-        $agility = $this->getAgility();
-        $this->setAgility($agility += self::throwSmallDice(2));
+        $text .= "<p>Résistance de base : $resistance + 3 dés de 6 faces : +";
+        // lancé de 3 dés de 6.
+        foreach (self::throwSmallDice(3) as $key => $value){
+            $text = " dé $key : $value +";
+            $text = substr($text,0,-1);
+            $resistance += $value;
+        }
+        $text .= " = $resistance<br>";
+        $this->setResistance($resistance);
+
+        // surcharge de l'agilité
+        $agilite = $this->getAgility();
+        $text .= "<p>Agilité de base : $agilite + 2 dés de 6 faces : +";
+        // lancé de 2 dés de 6.
+        foreach (self::throwSmallDice(2) as $key => $value){
+            $text = " dé $key : $value +";
+            $text = substr($text,0,-1);
+            $agilite += $value;
+        }
+        $text .= " = $agilite<br>";
+        $this->setAgility($agilite);
         
     }
 
     /*
     Actions
     */
-    public function attack($enemy)
+    /**
+     * @throws \Random\RandomException
+     */
+    public function attack($enemy): string
     {
 
-        // notre attaque
-        $attackEnemy = $this->getAgility() + $this->throwBigDice(4);
+        // ATTAQUE
+        $attackPoints = $this->getAgility();
+        $text = "<h4>Attaque de {$this->getName()}</h4> <p>Agilité = $attackPoints<br>";
+        // lancé de 3 dés de 20
+        $throwDices = $this->throwBigDice(3);
+        $text .= "3 Dés de 20 faces : ";
+        $desPoints = 0;
+        foreach ($throwDices as $key => $value){
+            $desPoints += $value;
+            $text .= "dé $key = $value - ";
+        }
+        $attackPoints += $desPoints;
+        $text .="Total des dés = $desPoints<br>";
+        $text .= "<br> Points d'attaques de {$this->getName()} : $attackPoints</p>";
+
+
         // défense de l'ennemi
         $defenseEnemy = $enemy->defence();
 
-        if($attackEnemy>$defenseEnemy){
-            $wound = ($attackEnemy - $defenseEnemy) + ($this->getStrength()-$enemy->getStrength());
-            $healtEnemy = $this->getHealthPoint() - $wound;
-            $enemy->setHealthPoint($healtEnemy);
-            return " {$this->getName()} a blessé {$enemy->getName()}";
-        }
+        return $text.$defenseEnemy["texte"]."<hr>";
 
     }
 
     // notre défense
-    public function defence()
+    public function defence(): array
     {
-        $defense = $this->getAgility() + $this->throwBigDice(4);
+        // DEFENCE
+        $defencePoints = $this->getAgility();
+        $text = "<h4>Défense de {$this->getName()}</h4><p>Agilité = $defencePoints<br>";
+        // lancé de 3 dés de 20
+        $throwDices = $this->throwBigDice(3);
+        $text .= "3 Dés de 20 faces : ";
+        $desPoints = 0;
+        foreach ($throwDices as $key => $value){
+            $desPoints += $value;
+            $text .= "dé $key = $value - ";
+        }
+        $defencePoints += $desPoints;
+        $text .="Total des dés = $desPoints<br>";
+        $text .= "<br> Points de défense de {$this->getName()} : $defencePoints</p>";
+        return(["points"=>$defencePoints, "texte"=>$text]);
     }
 
     public function getHealthPoint(): int

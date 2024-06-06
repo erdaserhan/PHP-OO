@@ -16,6 +16,9 @@ abstract class PersoAbstract{
         "Cyborg",
     ];
 
+    protected const TRHROW_DICE_SMALL = 6; 
+    protected const TRHROW_DICE_BIG = 20; 
+    
     // Méthodes
 
     // méthode __construct qui sera héritée

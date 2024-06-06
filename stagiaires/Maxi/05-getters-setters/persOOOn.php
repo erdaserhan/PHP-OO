@@ -40,7 +40,7 @@ class PersOOOn {
             // on va utiliser les setters pour remplir les paramètres
             $this->setEspecePerso($species2);
             // setter pour le nom
-            $this->setNomPerso($name);
+            #
         }
 
         /*
@@ -66,25 +66,31 @@ class PersOOOn {
             }
         }
 
-        // setter de $nomPerso (protection + de 3 à 16 caractères)
-        public function setNomPerso(string $theName): void
+        // setter de $nomPerso (protection + 3 à 16 caractères)
+        public function setNomPerso(string $nom): void
         {
-            // on retire les tags puis les espaces avant et arrière
-            $theName = trim(strip_tags($theName));
-            // si $theName est plus petit que 3 caractères
-            $nameLength = strlen($theName); // prise de longueur
-            if($nameLength<3){
-                throw new Exception("Le nom est trop court !", 334);
-            }elseif($nameLength>16){
-                throw new Exception("Le nom est trop long !",335);
-            }
-            $this->nomPerso = $theName;
-
+            $this->nomPerso = $nom;
         }
 
         // setter de $xpPerso (int positif)
+        public function setXpPerso(int $xp): void
+        {
+            if($xp >= 0){
+                $this->xpPerso = $xp;
+            }else{
+                throw new Exception("Xp ne peut pas être négatif !", 333);
+            }
+        }
 
         // setter de $hpPerso (bool pour false ou un int)
+        public function setHpPerso(bool|int $hp): void
+        {
+            if($hp === false || $hp >= 0){
+                $this->hpPerso = $hp;
+            }else{
+                throw new Exception("Hp ne peut pas être négatif ou égal à false !", 333);
+            }
+        }   
 
 
         /*
@@ -103,11 +109,19 @@ class PersOOOn {
         }
 
         // getter de $nomPerso (string))
+        public function getNomPerso(): string
+        {
+            return $this->nomPerso;
+        }
 
         // getter de $xpPerso (null ou int)
-
+        public function getXpPerso(): ?int
+        {
+            return $this->xpPerso;
+        }
         // getter de $hpPerso (bool|null|int)
-
-        
-
+        public function getHpPerso(): bool|null|int
+        {
+            return $this->hpPerso;
+        }
 }

@@ -2,8 +2,17 @@
 
 class PersoWarrior extends PersoAbstract{
 
+    //Proppriétés d'un guerriere
+    protected $strength= 100;
+    protected int $resistance = 100;
+    protected int $agilty=80;
 
-
+    
+    public function __construct(string $theName, string $theEspece, int $bonusHealth)
+    {
+        parent::__construct($theName,$theEspece);
+        
+    }
 
     public function getHealthPoint(): ?int
     {
@@ -31,7 +40,7 @@ class PersoWarrior extends PersoAbstract{
     }
 
     public function defence($enemy){
-        
+
     }
 
     

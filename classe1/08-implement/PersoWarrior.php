@@ -1,6 +1,6 @@
 <?php
 
-class PersoWarrior extends PersoAbstract implements ActionsPersoInterface{
+class PersoWarrior extends PersoAbstract implements ActionsPersoInterface, PassivePersoInterface{
 
     // Propriétés d'un guerrier
     protected int $strength = 100;
@@ -120,7 +120,7 @@ class PersoWarrior extends PersoAbstract implements ActionsPersoInterface{
     }
 
     // notre défense
-    public function defence(): string
+    public function defence(): array
     {
         // DEFENCE
         $defencePoints = $this->getAgility();

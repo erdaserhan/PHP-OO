@@ -5,6 +5,5 @@ interface ActionsPersoInterface{
     public function attack($enemy): string;
     // un perso doit se défendre
     public function defence(): array;
-
-
+    
 }

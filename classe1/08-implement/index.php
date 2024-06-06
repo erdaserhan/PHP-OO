@@ -1,5 +1,6 @@
 <?php
 require_once "ActionsPersoInterface.php";
+require_once "PassivePersoInterface.php";
 require_once "PersoAbstract.php";
 require_once "PersoWarrior.php";
 

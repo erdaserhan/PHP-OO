@@ -26,10 +26,16 @@ require_once "PersoWarrior.php";
     </code><br>
     <?php
     $persoWarrior1 = new PersoWarrior("Lee","Humain");
+    echo $persoWarrior1->getInfoPerso();
     $persoWarrior2 = new PersoWarrior("Emrah","Cyborg");
+    echo $persoWarrior2->getInfoPerso();
+
+
     //$persoWarrior1->setHealthPoint(1000);
     //echo $persoWarrior1->getHealthPoint();
     var_dump($persoWarrior1,$persoWarrior2);
+
+    var_dump($persoWarrior1->throwBigDice(5,false));
 
     echo $persoWarrior1->attack($persoWarrior2)."<br>";
     echo $persoWarrior2->attack($persoWarrior1)."<br>";

@@ -6,6 +6,7 @@ class PersoWarrior extends PersoAbstract{
     protected int $strength = 100;
     protected int $resistance = 100;
     protected int $agility = 80;
+    protected ?string $infoPerso;
 
     // on a hérité du constructeur de PersoAbstract, on va le surcharger
 
@@ -14,32 +15,28 @@ class PersoWarrior extends PersoAbstract{
         // vient de la classe parente (PersoAbstract)
         parent::__construct($theName,$theEspece);
 
-        // texte
-        $text = "<h3>Création d'un ".self::class." de l'espèce {$this->getEspece()} nommé {$this->getName()}</h3>";
+        // on va initialiser les valeurs du nouveau Warrior
+        $this->initPerso();
+        
+    }
+
+    /*
+    Actions
+    */
+
+    // obligation de créer l'initialisation depuis la classe abstraite
+    protected function initPerso(): void
+    {
+        // texte de présentation
+        $this->setInfoPerso("<h4>Création d'un ".self::class."  {$this->getEspece()} nommé {$this->getName()}</h4>");
 
         // surcharge de la force
-        $strength = $this->getStrength();
-        $text .= "<p>Force de base : $strength + 3 dés de 6 faces : +";
-        // lancé de 3 dés de 6.
-        foreach (self::throwSmallDice(3) as $key => $value){
-            $text = " dé $key : $value +";
-            $strength += $value;
-        }
-        $text = substr($text,0,-1);
-        $text .= " = $strength<br>";
-        $this->setStrength($strength);
+        $this->initStrength();
 
         // surcharge de la résistance
-        $resistance = $this->getResistance();
-        $text .= "<p>Résistance de base : $resistance + 3 dés de 6 faces : +";
-        // lancé de 3 dés de 6.
-        foreach (self::throwSmallDice(3) as $key => $value){
-            $text = " dé $key : $value +";
-            $text = substr($text,0,-1);
-            $resistance += $value;
-        }
-        $text .= " = $resistance<br>";
-        $this->setResistance($resistance);
+        $this->initResistance();
+
+        /*
 
         // surcharge de l'agilité
         $agilite = $this->getAgility();
@@ -52,12 +49,43 @@ class PersoWarrior extends PersoAbstract{
         }
         $text .= " = $agilite<br>";
         $this->setAgility($agilite);
+        */
         
     }
 
-    /*
-    Actions
-    */
+    // initialisation de la force (avec mise à jour de $infoPerso)
+    private function initStrength():void{
+        $text = $this->getInfoPerso();
+        $strength = $this->getStrength();
+        $text .= "<p>Force de base : $strength + 3 dés de 6 faces : +";
+        // lancé de 3 dés de 6.
+        foreach (self::throwSmallDice(3) as $key => $value){
+            $text .= " dé $key : $value +";
+            $strength += $value;
+        }
+        $text = substr($text,0,-1);
+        $text .= " = $strength<br>";
+        $this->setStrength($strength);
+        $this->setInfoPerso($text);
+    }
+
+     // initialisation de la résisitance (avec mise à jour de $infoPerso)
+     private function initResistance():void
+     {
+        $text = $this->getInfoPerso();
+        $resistance = $this->getResistance();
+        $text .= "<p>Résistance de base : $resistance + 3 dés de 6 faces : +";
+        // lancé de 3 dés de 6.
+        foreach (self::throwSmallDice(3) as $key => $value){
+            $text .= " dé $key : $value +";
+            $text = substr($text,0,-1);
+            $resistance += $value;
+        }
+        $text .= " = $resistance<br>";
+        $this->setResistance($resistance);
+        $this->setInfoPerso($text);
+    }
+
     /**
      * @throws \Random\RandomException
      */
@@ -107,26 +135,7 @@ class PersoWarrior extends PersoAbstract{
         return(["points"=>$defencePoints, "texte"=>$text]);
     }
 
-    public function getHealthPoint(): int
-    {
-        return $this->healthPoint;
-    }
-
-    public function setHealthPoint(int $health){
-        $this->healthPoint = $health;
-    }
-
-    public function getExperience(): int
-    {
-        return $this->experience;
-    }
-
-    public function setExperience($experience)
-    {
-        $this->experience = $experience;
-
-        return $this;
-    }
+    
 
     
 
@@ -160,5 +169,25 @@ class PersoWarrior extends PersoAbstract{
     protected function setAgility(int $agility)
     {
         $this->agility = $agility;
+    }
+
+    /**
+     * Get the value of infoPerso
+     */ 
+    public function getInfoPerso()
+    {
+        return $this->infoPerso;
+    }
+
+    /**
+     * Set the value of infoPerso
+     *
+     * @return  self
+     */ 
+    public function setInfoPerso($infoPerso)
+    {
+        $this->infoPerso = $infoPerso;
+
+        return $this;
     }
 }

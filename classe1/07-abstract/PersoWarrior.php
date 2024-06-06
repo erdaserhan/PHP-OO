@@ -36,20 +36,8 @@ class PersoWarrior extends PersoAbstract{
         // surcharge de la résistance
         $this->initResistance();
 
-        /*
-
         // surcharge de l'agilité
-        $agilite = $this->getAgility();
-        $text .= "<p>Agilité de base : $agilite + 2 dés de 6 faces : +";
-        // lancé de 2 dés de 6.
-        foreach (self::throwSmallDice(2) as $key => $value){
-            $text = " dé $key : $value +";
-            $text = substr($text,0,-1);
-            $agilite += $value;
-        }
-        $text .= " = $agilite<br>";
-        $this->setAgility($agilite);
-        */
+        $this->initAgility();
         
     }
 
@@ -69,7 +57,7 @@ class PersoWarrior extends PersoAbstract{
         $this->setInfoPerso($text);
     }
 
-     // initialisation de la résisitance (avec mise à jour de $infoPerso)
+     // initialisation de la résistance (avec mise à jour de $infoPerso)
      private function initResistance():void
      {
         $text = $this->getInfoPerso();
@@ -86,6 +74,22 @@ class PersoWarrior extends PersoAbstract{
         $this->setInfoPerso($text);
     }
 
+    // initialisation de l'agilité
+    private function initAgility(): void
+    { 
+        $text = $this->getInfoPerso();
+        $agilite = $this->getAgility();
+        $text .= "<p>Agilité de base : $agilite + 2 dés de 6 faces : +";
+        // lancé de 2 dés de 6.
+        foreach (self::throwSmallDice(2) as $key => $value){
+            $text .= " dé $key : $value +";
+            $text = substr($text,0,-1);
+            $agilite += $value;
+        }
+        $text .= " = $agilite<br>";
+        $this->setAgility($agilite);
+        $this->setInfoPerso($text);
+    }
     /**
      * @throws \Random\RandomException
      */

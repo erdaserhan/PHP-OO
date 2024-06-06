@@ -19,11 +19,18 @@ require_once "PersoWarrior.php";
     //$perso = new PersoAbstract();
     var_dump(PersoAbstract::ESPECE_CHOICE);
     ?>
-    <h3>Un héritier doit créer les méthodes abstaites</h3>
+    <h3>Un héritier doit créer les méthodes abstraites</h3>
     <code>$persoWarrior1 = new PersoWarrior("Luc");
     $persoWarrior1->setHealthPoint(1000);
     echo $persoWarrior1->getHealthPoint();
     </code><br>
+    <h3>Lors de la création de personnages</h3>
+    <p>Nous pouvons récupérer les infoPerso qui sont générées depuis le constructeur</p>
+    <pre><code>$persoWarrior1 = new PersoWarrior("Lee","Humain");
+echo $persoWarrior1->getInfoPerso();
+$persoWarrior2 = new PersoWarrior("Emrah","Cyborg");
+echo $persoWarrior2->getInfoPerso();</code></pre>
+    <p>
     <?php
     $persoWarrior1 = new PersoWarrior("Lee","Humain");
     echo $persoWarrior1->getInfoPerso();
@@ -41,7 +48,7 @@ require_once "PersoWarrior.php";
     echo $persoWarrior2->attack($persoWarrior1)."<br>";
     echo $persoWarrior1->attack($persoWarrior2)."<br>";
     echo $persoWarrior2->attack($persoWarrior1)."<br>";
-    
+
     var_dump($persoWarrior1,$persoWarrior2);
     ?>
 </body>

@@ -1,5 +1,7 @@
 <?php
 
-class PersoWarriorEnfant extends PersoWarrior {
-    
+final class PersoWarriorEnfant extends PersoWarrior {
+
+    use PersoTrait;
+
 }

@@ -1,4 +1,5 @@
 <?php
+require_once "PersoTrait.php"; //Première. Sinon PersoWarriorEnfant.php ne fonctionne pas
 require_once "ActionsPersoInterface.php";
 require_once "PassivePersoInterface.php";
 require_once "PersoAbstract.php";
@@ -55,6 +56,8 @@ echo $persoWarrior2->getInfoPerso();</code></pre>
     echo $persoWarrior2->attack($persoWarrior1)."<br>";
     echo $persoWarrior1->attack($persoWarrior3)."<br>";
     echo $persoWarrior3->attack($persoWarrior1)."<br>";
+
+    echo $persoWarrior3->metEnMajuscule("Hello les enfants");
 
     var_dump($persoWarrior1,$persoWarrior2,$persoWarrior3);
     ?>

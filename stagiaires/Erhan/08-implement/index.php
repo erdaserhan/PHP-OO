@@ -3,6 +3,7 @@ require_once "ActionsPersoInterface.php";
 require_once "PassivePersoInterface.php";
 require_once "PersoAbstract.php";
 require_once "PersoWarrior.php";
+require_once "PersoWarriorEnfant.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,6 +39,8 @@ echo $persoWarrior2->getInfoPerso();</code></pre>
     echo $persoWarrior1->getInfoPerso();
     $persoWarrior2 = new PersoWarrior("Emrah","Cyborg");
     echo $persoWarrior2->getInfoPerso();
+    $persoWarrior3 = new PersoWarriorEnfant("Rami","Elfe");
+    echo $persoWarrior3->getInfoPerso();
 
 
     //$persoWarrior1->setHealthPoint(1000);
@@ -50,8 +53,10 @@ echo $persoWarrior2->getInfoPerso();</code></pre>
     echo $persoWarrior2->attack($persoWarrior1)."<br>";
     echo $persoWarrior1->attack($persoWarrior2)."<br>";
     echo $persoWarrior2->attack($persoWarrior1)."<br>";
+    echo $persoWarrior1->attack($persoWarrior3)."<br>";
+    echo $persoWarrior3->attack($persoWarrior1)."<br>";
 
-    var_dump($persoWarrior1,$persoWarrior2);
+    var_dump($persoWarrior1,$persoWarrior2,$persoWarrior3);
     ?>
 </body>
 </html>

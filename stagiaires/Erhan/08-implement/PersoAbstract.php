@@ -11,7 +11,7 @@ abstract class PersoAbstract{
     public const  ESPECE_CHOICE = [
         "Humain",
         "Saiyan",
-        "Elf",
+        "Elfe",
         "Nain",
         "Cyborg",
     ];
@@ -26,8 +26,6 @@ abstract class PersoAbstract{
 
     // méthodes abstraites, elles sont déclarées dans la classe abstraite, pour obliger
     // les héritiers à redéclarer ces méthodes en public ou protected
-    abstract public function attack($enemy);
-    abstract public function defence();
     abstract protected function initPerso();
 
 
